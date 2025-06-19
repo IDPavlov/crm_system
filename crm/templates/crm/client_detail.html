@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Details - {{ client.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Client Details</h2>
+        <div>
+            <a href="{% url 'client_update' client.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'client_list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h3>{{ client.name }}</h3>
+            <table class="table">
+                <tr>
+                    <th>Email:</th>
+                    <td>{{ client.email }}</td>
+                </tr>
+                <tr>
+                    <th>Phone:</th>
+                    <td>{{ client.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Manager:</th>
+                    <td>{{ client.manager.get_full_name|default:"Not assigned" }}</td>
+                </tr>
+                <tr>
+                    <th>Created at:</th>
+                    <td>{{ client.created_at|date:"d.m.Y H:i" }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Client Orders</h4>
+        </div>
+        <div class="card-body">
+            {% if client.order_set.all %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in client.order_set.all %}
+                        <tr>
+                            <td><a href="{% url 'order_detail' order.pk %}">#{{ order.id }}</a></td>
+                            <td>{{ order.created_at|date:"d.m.Y" }}</td>
+                            <td><span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span></td>
+                            <td>{{ order.total_amount }} ₽</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No orders found for this client.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
