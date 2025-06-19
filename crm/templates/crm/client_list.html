@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Clients</h2>
+        <a href="{% url 'client_create' %}" class="btn btn-success">Add Client</a>
+    </div>
+
+    <div class="mb-3">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <select name="manager" class="form-select">
+                    <option value="">All Managers</option>
+                    {% for manager in managers %}
+                    <option value="{{ manager.id }}" {% if request.GET.manager == manager.id|stringformat:"s" %}selected{% endif %}>
+                        {{ manager.get_full_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Manager</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.manager.get_full_name|default:"-" }}</td>
+                <td>
+                    <a href="{% url 'client_detail' client.pk %}" class="btn btn-sm btn-info">View</a>
+                    <a href="{% url 'client_update' client.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'client_delete' client.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'pagination.html' with page_obj=clients %}
+</div>
+{% endblock %}

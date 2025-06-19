@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import pandas as pd
-from django.db.models import Count, Sum
+
+from analytics import models
+# from django.db.models import Count, Sum
 from crm.models import Order, Client
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -57,8 +59,8 @@ def sales_report(request):
 def client_analytics(request):
     # Анализ клиентов
     clients = Client.objects.annotate(
-        order_count=Count('order'),
-        total_spent=Sum('order__total_amount')
+        order_count=models.Count('order'),
+        total_spent=models.Sum('order__total_amount')
     ).filter(order_count__gt=0)
 
     # Топ клиентов

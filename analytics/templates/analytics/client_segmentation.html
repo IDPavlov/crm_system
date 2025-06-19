@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Client Segmentation{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Client Segmentation</h2>
+
+    {% if error %}
+        <div class="alert alert-warning">{{ error }}</div>
+    {% else %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <img src="data:image/png;base64,{{ chart }}" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="row">
+            {% for cluster in clusters %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-header">Segment #{{ cluster.id }}</div>
+                    <div class="card-body">
+                        <p>Clients: {{ cluster.count }}</p>
+                        <p>Avg. Spent: {{ cluster.avg_spent|floatformat:2 }}</p>
+                        <p>Avg. Orders: {{ cluster.avg_orders|floatformat:1 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}CRM Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>CRM Dashboard</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Clients</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for client in recent_clients %}
+                        <li class="list-group-item">
+                            <a href="{% url 'client_detail' client.pk %}">{{ client.name }}</a>
+                            <span class="badge bg-secondary">{{ client.created_at|date:"d.m.Y" }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'client_list' %}" class="btn btn-primary mt-3">All Clients</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Orders</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for order in recent_orders %}
+                        <li class="list-group-item">
+                            <a href="{% url 'order_detail' order.pk %}">Order #{{ order.id }}</a>
+                            <span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span>
+                            <span class="float-end">{{ order.total_amount }} ₽</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'order_list' %}" class="btn btn-primary mt-3">All Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
