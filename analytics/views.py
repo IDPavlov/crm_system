@@ -1,3 +1,4 @@
+from django.db.models import Count, Sum
 from django.shortcuts import render
 import pandas as pd
 import numpy as np
@@ -71,8 +72,8 @@ def client_segmentation(request):
 
     # Получаем данные клиентов
     clients = Client.objects.annotate(
-        order_count=models.Count('order'),
-        total_spent=models.Sum('order__total_amount')
+        order_count=Count('order'),
+        total_spent=Sum('order__total_amount')
     ).filter(order_count__gt=0).values('order_count', 'total_spent')
 
     if len(clients) < 5:

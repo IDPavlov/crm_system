@@ -13,15 +13,25 @@
                     <h3>Recent Clients</h3>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group">
-                        {% for client in recent_clients %}
-                        <li class="list-group-item">
-                            <a href="{% url 'client_detail' client.pk %}">{{ client.name }}</a>
-                            <span class="badge bg-secondary">{{ client.created_at|date:"d.m.Y" }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <a href="{% url 'client_list' %}" class="btn btn-primary mt-3">All Clients</a>
+                    {% if recent_clients|length > 0 %}
+                        <ul class="list-group">
+                            {% for client in recent_clients %}
+                            <li class="list-group-item">
+                                <a href="{% url 'client_detail' client.pk %}">
+                                    {{ client.name }}
+                                </a>
+                                <span class="badge bg-secondary">
+                                    {{ client.created_at|date:"d.m.Y" }}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Нет клиентов</p>
+                    {% endif %}
+                    <a href="{% url 'client_list' %}" class="btn btn-primary mt-3">
+                        All Clients
+                    </a>
                 </div>
             </div>
         </div>
@@ -32,15 +42,25 @@
                     <h3>Recent Orders</h3>
                 </div>
                 <div class="card-body">
-                    <ul class="list-group">
-                        {% for order in recent_orders %}
-                        <li class="list-group-item">
-                            <a href="{% url 'order_detail' order.pk %}">Order #{{ order.id }}</a>
-                            <span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span>
-                            <span class="float-end">{{ order.total_amount }} ₽</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    {% if recent_orders|length > 0 %}
+                        <ul class="list-group">
+                            {% for order in recent_orders %}
+                            <li class="list-group-item">
+                                <a href="{% url 'order_detail' order.pk %}">
+                                    Order #{{ order.id }}
+                                </a>
+                                <span class="badge bg-{{ order.status_color }}">
+                                    {{ order.get_status_display }}
+                                </span>
+                                <span class="float-end">
+                                    {{ order.total_amount }} ₽
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Нет заказов</p>
+                    {% endif %}
                     <a href="{% url 'order_list' %}" class="btn btn-primary mt-3">All Orders</a>
                 </div>
             </div>

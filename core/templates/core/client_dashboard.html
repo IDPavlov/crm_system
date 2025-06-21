@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ client.name }}</h2>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>Your Orders</h3>
+        </div>
+        <div class="card-body">
+            {% if orders %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>{{ order.created_at|date:"d.m.Y" }}</td>
+                        <td><span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span></td>
+                        <td>{{ order.total_amount }} ₽</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No orders found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

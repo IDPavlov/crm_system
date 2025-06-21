@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Order #{{ order.id }} Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Order #{{ order.id }}</h2>
+        <div>
+            <a href="{% url 'order_update' order.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'order_list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>Client:</th>
+                    <td><a href="{% url 'client_detail' order.client.id %}">{{ order.client.name }}</a></td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td><span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span></td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                </tr>
+                <tr>
+                    <th>Total Amount:</th>
+                    <td>{{ order.total_amount }} ₽</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Order Items</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.orderitem_set.all %}
+                    <tr>
+                        <td><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></td>
+                        <td>{{ item.price }} ₽</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.get_total }} ₽</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="table-active">
+                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td><strong>{{ order.total_amount }} ₽</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

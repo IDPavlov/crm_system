@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Order #{{ object.id }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Confirm Delete</h2>
+        </div>
+        <div class="card-body">
+            <p>Are you sure you want to delete order #{{ object.id }} for client "{{ object.client.name }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+                <a href="{% url 'order_detail' object.id %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 import pandas as pd
 
 from analytics import models
-# from django.db.models import Count, Sum
+from django.db.models import Count, Sum
 from crm.models import Order, Client
 import matplotlib.pyplot as plt
 from io import BytesIO
@@ -14,7 +14,7 @@ def dashboard_view(request):
     # Основные метрики
     total_clients = Client.objects.count()
     total_orders = Order.objects.count()
-    total_revenue = Order.objects.aggregate(total=models.Sum('total_amount'))['total'] or 0
+    total_revenue = Order.objects.aggregate(total=Sum('total_amount'))['total'] or 0
 
     context = {
         'total_clients': total_clients,
@@ -59,8 +59,8 @@ def sales_report(request):
 def client_analytics(request):
     # Анализ клиентов
     clients = Client.objects.annotate(
-        order_count=models.Count('order'),
-        total_spent=models.Sum('order__total_amount')
+        order_count=Count('order'),
+        total_spent=Sum('order__total_amount')
     ).filter(order_count__gt=0)
 
     # Топ клиентов
