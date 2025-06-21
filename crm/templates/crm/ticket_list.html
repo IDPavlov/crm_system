@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<h2>Тикеты поддержки</h2>
+
+<!-- Фильтрация -->
+<form method="get" class="mb-4 bg-light p-3 rounded">
+    {{ filter.form|crispy }}
+    <button type="submit" class="btn btn-primary mt-2">Фильтровать</button>
+</form>
+
+<!-- Таблица тикетов -->
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Тема</th>
+            <th>Клиент</th>
+            <th>Статус</th>
+            <th>Ответственный</th>
+            <th>Дата создания</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td>
+                <a href="{% url 'ticket_detail' ticket.pk %}">{{ ticket.subject }}</a>
+            </td>
+            <td>{{ ticket.client.name }}</td>
+            <td>
+                <span class="badge 
+                    {% if ticket.status == 'open' %}bg-danger
+                    {% elif ticket.status == 'in_progress' %}bg-warning
+                    {% else %}bg-success{% endif %}">
+                    {{ ticket.get_status_display }}
+                </span>
+            </td>
+            <td>{{ ticket.assigned_to.get_full_name|default:ticket.assigned_to.username }}</td>
+            <td>{{ ticket.created_at|date:"d.m.Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">Нет тикетов</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

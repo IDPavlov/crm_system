@@ -5,9 +5,13 @@ import csv
 from io import TextIOWrapper
 
 from core.models import User
+from .filters import SupportTicketFilter
 from .models import Client, Product, Order, SupportTicket
 from .forms import ClientForm, ProductForm, OrderForm, SupportTicketForm, CSVUploadForm
 from django.views.generic import TemplateView
+
+import django_filters
+from .models import Order
 
 
 class CRMDashboardView(TemplateView):
@@ -64,11 +68,23 @@ class ClientDeleteView(DeleteView):
     success_url = reverse_lazy('client_list')
 
 
+class OrderFilter(django_filters.FilterSet):
+    client = django_filters.CharFilter(field_name='client__name', lookup_expr='icontains')
+    status = django_filters.ChoiceFilter(choices=Order.STATUS_CHOICES)
+    min_amount = django_filters.NumberFilter(field_name='total_amount', lookup_expr='gte')
+    max_amount = django_filters.NumberFilter(field_name='total_amount', lookup_expr='lte')
+
+    class Meta:
+        model = Order
+        fields = []
+
+
 class ProductListView(ListView):
     model = Product
     template_name = 'crm/product_list.html'
     context_object_name = 'products'
     paginate_by = 10
+    filterset_class = OrderFilter
 
 
 class ProductCreateView(CreateView):
@@ -110,6 +126,11 @@ class OrderCreateView(CreateView):
     template_name = 'crm/order_form.html'
     success_url = reverse_lazy('order_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_form()  # Убедитесь, что форма есть в контексте
+        return context
+
 
 class OrderDetailView(DetailView):
     model = Order
@@ -136,12 +157,27 @@ class SupportTicketListView(ListView):
     context_object_name = 'tickets'
     paginate_by = 10
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = SupportTicketFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.filterset
+        return context
+
 
 class SupportTicketCreateView(CreateView):
     model = SupportTicket
     form_class = SupportTicketForm
     template_name = 'crm/ticket_form.html'
     success_url = reverse_lazy('ticket_list')
+
+    def form_valid(self, form):
+        # Автоназначение текущего пользователя
+        form.instance.assigned_to = self.request.user
+        return super().form_valid(form)
 
 
 class SupportTicketDetailView(DetailView):

@@ -9,6 +9,8 @@ from django.contrib import messages
 from crm.models import Client, Order
 import random
 
+from .models import Profile
+
 
 def client_login(request):
     if request.method == 'POST':
@@ -95,10 +97,10 @@ class CustomLogoutView(LogoutView):
 
 def profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        form = ProfileForm(request.POST, request.FILES, instance=Profile.objects.get(user=request.user))
         if form.is_valid():
             form.save()
             return redirect('profile')
     else:
-        form = ProfileForm(instance=request.user.profile)
+        form = ProfileForm(instance=Profile.objects.get(user=request.user))
     return render(request, 'core/profile.html', {'form': form})

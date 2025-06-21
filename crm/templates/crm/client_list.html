@@ -15,7 +15,7 @@
                 <select name="manager" class="form-select">
                     <option value="">All Managers</option>
                     {% for manager in managers %}
-                    <option value="{{ manager.id }}" {% if request.GET.manager == manager.id|stringformat:"s" %}selected{% endif %}>
+                    <option value="{{ manager.id }}" {% if request.GET.manager == manager.id %}selected{% endif %}>
                         {{ manager.get_full_name }}
                     </option>
                     {% endfor %}
@@ -55,5 +55,47 @@
     </table>
 
     {% include 'pagination.html' with page_obj=clients %}
+
+    {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page=1{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
+                            &laquo; First
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ page_obj.previous_page_number }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
+                            Previous
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
+                            Next
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
+                            Last &raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+
 </div>
 {% endblock %}
