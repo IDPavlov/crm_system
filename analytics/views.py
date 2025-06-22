@@ -16,7 +16,7 @@ import seaborn as sns
 
 def sales_prediction(request):
     if not request.user.has_perm('analytics.view_salesprediction'):
-        return render(request, '403.html', status=403)
+        return render(request, 'analytics/403.html', status=403)
 
     orders = Order.objects.all().values('created_at', 'total_amount')
     df = pd.DataFrame(orders)
@@ -70,7 +70,7 @@ def sales_prediction(request):
 
 def client_segmentation(request):
     if not request.user.has_perm('analytics.view_clientsegmentation'):
-        return render(request, '403.html', status=403)
+        return render(request, 'analytics/403.html', status=403)
 
     # Получаем данные клиентов
     clients = Client.objects.annotate(

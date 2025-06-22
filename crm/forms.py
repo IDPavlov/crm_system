@@ -9,6 +9,12 @@ class ClientForm(forms.ModelForm):
         widgets = {
             'manager': forms.Select(attrs={'class': 'form-select'}),
         }
+        labels = {
+            'name': 'Имя',
+            'email': 'Почта',
+            'phone': 'Телефон',
+            'manager': 'Менеджер'
+        }
 
 
 class ProductForm(forms.ModelForm):
