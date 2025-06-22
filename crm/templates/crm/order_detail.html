@@ -5,10 +5,10 @@
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Order #{{ order.id }}</h2>
+        <h2>Заказ №{{ order.id }}</h2>
         <div>
-            <a href="{% url 'order_update' order.pk %}" class="btn btn-warning">Edit</a>
-            <a href="{% url 'order_list' %}" class="btn btn-secondary">Back to List</a>
+            <a href="{% url 'order_update' order.pk %}" class="btn btn-warning">Изменить</a>
+            <a href="{% url 'order_list' %}" class="btn btn-secondary">Назад к списку</a>
         </div>
     </div>
 
@@ -16,19 +16,19 @@
         <div class="card-body">
             <table class="table">
                 <tr>
-                    <th>Client:</th>
+                    <th>Клиент:</th>
                     <td><a href="{% url 'client_detail' order.client.id %}">{{ order.client.name }}</a></td>
                 </tr>
                 <tr>
-                    <th>Status:</th>
+                    <th>Состояние:</th>
                     <td><span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span></td>
                 </tr>
                 <tr>
-                    <th>Date:</th>
+                    <th>Дата:</th>
                     <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
                 </tr>
                 <tr>
-                    <th>Total Amount:</th>
+                    <th>Общее количество:</th>
                     <td>{{ order.total_amount }} ₽</td>
                 </tr>
             </table>
@@ -37,16 +37,16 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Order Items</h4>
+            <h4>Позиции заказа</h4>
         </div>
         <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th>Товар</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Всего</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@
                     </tr>
                     {% endfor %}
                     <tr class="table-active">
-                        <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                        <td colspan="3" class="text-end"><strong>Всего:</strong></td>
                         <td><strong>{{ order.total_amount }} ₽</strong></td>
                     </tr>
                 </tbody>

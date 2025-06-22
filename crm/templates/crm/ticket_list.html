@@ -3,7 +3,7 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-<h2>Тикеты поддержки</h2>
+<h2>Обращение в поддержку</h2>
 
 <!-- Фильтрация -->
 <form method="get" class="mb-4 bg-light p-3 rounded">
@@ -42,7 +42,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5" class="text-center">Нет тикетов</td>
+            <td colspan="5" class="text-center">Нет обращений</td>
         </tr>
         {% endfor %}
     </tbody>

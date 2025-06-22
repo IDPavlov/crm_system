@@ -5,10 +5,10 @@
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Client Details</h2>
+        <h2>Подробности о клиенте</h2>
         <div>
-            <a href="{% url 'client_update' client.pk %}" class="btn btn-warning">Edit</a>
-            <a href="{% url 'client_list' %}" class="btn btn-secondary">Back to List</a>
+            <a href="{% url 'client_update' client.pk %}" class="btn btn-warning">Изменить</a>
+            <a href="{% url 'client_list' %}" class="btn btn-secondary">Назад к списку</a>
         </div>
     </div>
 
@@ -17,19 +17,19 @@
             <h3>{{ client.name }}</h3>
             <table class="table">
                 <tr>
-                    <th>Email:</th>
+                    <th>Почта:</th>
                     <td>{{ client.email }}</td>
                 </tr>
                 <tr>
-                    <th>Phone:</th>
+                    <th>Телефон:</th>
                     <td>{{ client.phone }}</td>
                 </tr>
                 <tr>
-                    <th>Manager:</th>
+                    <th>Менеджер:</th>
                     <td>{{ client.manager.get_full_name|default:"Not assigned" }}</td>
                 </tr>
                 <tr>
-                    <th>Created at:</th>
+                    <th>Создан:</th>
                     <td>{{ client.created_at|date:"d.m.Y H:i" }}</td>
                 </tr>
             </table>
@@ -38,17 +38,17 @@
 
     <div class="card mt-4">
         <div class="card-header">
-            <h4>Client Orders</h4>
+            <h4>Заказы клиента</h4>
         </div>
         <div class="card-body">
             {% if client.order_set.all %}
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Amount</th>
+                            <th>ID заказа</th>
+                            <th>Дата</th>
+                            <th>Состояние</th>
+                            <th>Количество</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
             {% else %}
-                <p>No orders found for this client.</p>
+                <p>Заказы клиента не найдены.</p>
             {% endif %}
         </div>
     </div>

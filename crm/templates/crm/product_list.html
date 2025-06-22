@@ -5,18 +5,18 @@
 {% block content %}
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Products</h2>
-        <a href="{% url 'product_create' %}" class="btn btn-success">Add Product</a>
+        <h2>Товары</h2>
+        <a href="{% url 'product_create' %}" class="btn btn-success">Добавить товар</a>
     </div>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Stock</th>
-                <th>Actions</th>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Раздел</th>
+                <th>Запас</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -27,9 +27,9 @@
                 <td>{{ product.get_category_display }}</td>
                 <td>{{ product.stock }}</td>
                 <td>
-                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-sm btn-info">View</a>
-                    <a href="{% url 'product_update' product.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="{% url 'product_delete' product.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-sm btn-info">Просмотр</a>
+                    <a href="{% url 'product_update' product.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+                    <a href="{% url 'product_delete' product.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                 </td>
             </tr>
             {% endfor %}
@@ -45,33 +45,33 @@
                     <li class="page-item">
                         <a class="page-link"
                            href="?page=1{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
-                            &laquo; First
+                            &laquo; Первая
                         </a>
                     </li>
                     <li class="page-item">
                         <a class="page-link"
                            href="?page={{ page_obj.previous_page_number }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
-                            Previous
+                            Предыдущая
                         </a>
                     </li>
                 {% endif %}
 
                 <li class="page-item active">
                     <span class="page-link">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
                     </span>
                 </li>
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
-                            Next
+                            Следующая
                         </a>
                     </li>
                     <li class="page-item">
                         <a class="page-link"
                            href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.manager %}&manager={{ request.GET.manager }}{% endif %}">
-                            Last &raquo;
+                            Последняя &raquo;
                         </a>
                     </li>
                 {% endif %}

@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <h2>{% if object %}Edit Order #{{ object.id }}{% else %}Create New Order{% endif %}</h2>
+    <h2>{% if object %}Изменить заказ №{{ object.id }}{% else %}Создать новый заказ{% endif %}</h2>
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
@@ -16,18 +16,18 @@
             {{ form.status }}
         </div>
         <div class="mb-3">
-            <label>Products:</label>
+            <label>Товары:</label>
             <div class="border p-3">
-                <label>Products:</label>
+                <label>Товары:</label>
                 <select name="products" class="form-select" multiple>
                     {% for product in form.products.field.queryset %}
                         <option value="{{ product.id }}">{{ product.name }} ({{ product.price }} ₽)</option>
                     {% endfor %}
                 </select>
             </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
         <a href="{% if object %}{% url 'order_detail' object.id %}{% else %}{% url 'order_list' %}{% endif %}"
-           class="btn btn-secondary">Cancel</a>
+           class="btn btn-secondary">Отмена</a>
     </form>
 </div>
 {% endblock %}

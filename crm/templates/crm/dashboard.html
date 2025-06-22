@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>CRM Dashboard</h1>
+    <h1>Главная панель управления CRM</h1>
 
     <div class="row mt-4">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3>Recent Clients</h3>
+                    <h3>Недавние клиенты</h3>
                 </div>
                 <div class="card-body">
                     {% if recent_clients|length > 0 %}
@@ -30,7 +30,7 @@
                         <p>Нет клиентов</p>
                     {% endif %}
                     <a href="{% url 'client_list' %}" class="btn btn-primary mt-3">
-                        All Clients
+                        Добавить клиентов
                     </a>
                 </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3>Recent Orders</h3>
+                    <h3>Недавние заказы</h3>
                 </div>
                 <div class="card-body">
                     {% if recent_orders|length > 0 %}
@@ -47,7 +47,7 @@
                             {% for order in recent_orders %}
                             <li class="list-group-item">
                                 <a href="{% url 'order_detail' order.pk %}">
-                                    Order #{{ order.id }}
+                                    Заказ №{{ order.id }}
                                 </a>
                                 <span class="badge bg-{{ order.status_color }}">
                                     {{ order.get_status_display }}
@@ -61,7 +61,9 @@
                     {% else %}
                         <p>Нет заказов</p>
                     {% endif %}
-                    <a href="{% url 'order_list' %}" class="btn btn-primary mt-3">All Orders</a>
+                    <a href="{% url 'order_list' %}" class="btn btn-primary mt-3">
+                        Все заказы
+                    </a>
                 </div>
             </div>
         </div>

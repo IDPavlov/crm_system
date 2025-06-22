@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>Dashboard</h1>
+    <h1>Сводка данных</h1>
     
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="card text-white bg-primary mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Total Clients</h5>
+                    <h5 class="card-title">Всего клиентов</h5>
                     <p class="card-text display-4">{{ total_clients }}</p>
                 </div>
             </div>
@@ -18,7 +18,7 @@
         <div class="col-md-4">
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Total Orders</h5>
+                    <h5 class="card-title">Всего заказов</h5>
                     <p class="card-text display-4">{{ total_orders }}</p>
                 </div>
             </div>
@@ -26,7 +26,7 @@
         <div class="col-md-4">
             <div class="card text-white bg-info mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Total Revenue</h5>
+                    <h5 class="card-title">Общая выручка</h5>
                     <p class="card-text display-4">{{ total_revenue|floatformat:2 }} ₽</p>
                 </div>
             </div>
@@ -41,9 +41,9 @@
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-2">
-                        <a href="{% url 'client_create' %}" class="btn btn-outline-primary">Add Client</a>
-                        <a href="{% url 'order_create' %}" class="btn btn-outline-success">Create Order</a>
-                        <a href="{% url 'ticket_create' %}" class="btn btn-outline-warning">Create Ticket</a>
+                        <a href="{% url 'client_create' %}" class="btn btn-outline-primary">Добавить клиента</a>
+                        <a href="{% url 'order_create' %}" class="btn btn-outline-success">Добавить заказ</a>
+                        <a href="{% url 'ticket_create' %}" class="btn btn-outline-warning">Обращение в техподдержку</a>
                     </div>
                 </div>
             </div>
