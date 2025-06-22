@@ -44,8 +44,8 @@ def sales_prediction(request):
     model = LinearRegression()
     model.fit(X_poly, y)
 
-    # Прогноз на 30 дней вперед
-    future_days = np.arange(df['day_num'].max() + 1, df['day_num'].max() + 31).reshape(-1, 1)
+    # Прогноз на 90 дней вперед
+    future_days = np.arange(df['day_num'].max() + 1, df['day_num'].max() + 91).reshape(-1, 1)
     future_poly = poly.transform(future_days)
     future_pred = model.predict(future_poly)
 
@@ -92,12 +92,12 @@ def client_segmentation(request):
     # Кластеризация K-Means
     kmeans = KMeans(n_clusters=3, random_state=42)
     clusters = kmeans.fit_predict(scaled_data)
-    df['cluster'] = clusters
+    df['кластер'] = clusters + 1
 
     # Визуализация
     plt.figure(figsize=(10, 6))
     sns.scatterplot(data=df, x='total_spent', y='order_count',
-                    hue='cluster', palette='viridis', s=100)
+                    hue='кластер', palette='viridis', s=100)
     plt.title('Сегментация клиентов')
     plt.xlabel('Общая сумма покупок')
     plt.ylabel('Количество заказов')
@@ -111,8 +111,8 @@ def client_segmentation(request):
 
     # Описание кластеров
     cluster_descriptions = []
-    for cluster in sorted(df['cluster'].unique()):
-        cluster_data = df[df['cluster'] == cluster]
+    for cluster in sorted(df['кластер'].unique()):
+        cluster_data = df[df['кластер'] == cluster]
         description = {
             'id': cluster,
             'count': len(cluster_data),

@@ -19,11 +19,11 @@
             {% for cluster in clusters %}
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <div class="card-header">Segment #{{ cluster.id }}</div>
+                    <div class="card-header">Группа №{{ cluster.id }}</div>
                     <div class="card-body">
-                        <p>Clients: {{ cluster.count }}</p>
-                        <p>Avg. Spent: {{ cluster.avg_spent|floatformat:2 }}</p>
-                        <p>Avg. Orders: {{ cluster.avg_orders|floatformat:1 }}</p>
+                        <p>Клиентов: {{ cluster.count }}</p>
+                        <p>В среднем потратили: {{ cluster.avg_spent|floatformat:2 }}</p>
+                        <p>В среднем заказов: {{ cluster.avg_orders|floatformat:1 }}</p>
                     </div>
                 </div>
             </div>
