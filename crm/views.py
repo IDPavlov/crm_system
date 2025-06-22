@@ -128,7 +128,7 @@ class OrderCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.get_form()  # Убедитесь, что форма есть в контексте
+        context['form'] = self.get_form()
         return context
 
 

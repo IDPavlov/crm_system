@@ -29,7 +29,7 @@
                 <td><span class="badge bg-{{ order.status_color }}">{{ order.get_status_display }}</span></td>
                 <td>{{ order.total_amount }} ₽</td>
                 <td>
-                    <a href="{% url 'order_detail' order.pk %}" class="btn btn-sm btn-info">Просмотр</a>
+                    <a href="{% url 'order_detail' order.pk %}" class="btn btn-sm btn-info">Посмотреть</a>
                     <a href="{% url 'order_update' order.pk %}" class="btn btn-sm btn-warning">Изменить</a>
                     <a href="{% url 'order_delete' order.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                 </td>

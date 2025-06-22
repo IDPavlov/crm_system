@@ -13,7 +13,7 @@
         <form method="get" class="row g-3">
             <div class="col-md-4">
                 <select name="manager" class="form-select">
-                    <option value="">All Managers</option>
+                    <option value="">Все менеджеры</option>
                     {% for manager in managers %}
                     <option value="{{ manager.id }}" {% if request.GET.manager == manager.id %}selected{% endif %}>
                         {{ manager.get_full_name }}
@@ -22,7 +22,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary">Filter</button>
+                <button type="submit" class="btn btn-primary">Фильтровать</button>
             </div>
         </form>
     </div>
@@ -45,9 +45,9 @@
                 <td>{{ client.phone }}</td>
                 <td>{{ client.manager.get_full_name|default:"-" }}</td>
                 <td>
-                    <a href="{% url 'client_detail' client.pk %}" class="btn btn-sm btn-info">View</a>
-                    <a href="{% url 'client_update' client.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="{% url 'client_delete' client.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'client_detail' client.pk %}" class="btn btn-sm btn-info">Посмотреть</a>
+                    <a href="{% url 'client_update' client.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+                    <a href="{% url 'client_delete' client.pk %}" class="btn btn-sm btn-danger">Удалить</a>
                 </td>
             </tr>
             {% endfor %}
