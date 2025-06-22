@@ -50,13 +50,13 @@ def sales_prediction(request):
     future_pred = model.predict(future_poly)
 
     plt.figure(figsize=(12, 6))
-    plt.scatter(X, y, label='Actual Sales')
+    plt.scatter(X, y, label='Настоящие продажи')
     plt.plot(np.concatenate([X.ravel(), future_days.ravel()]),
              np.concatenate([model.predict(X_poly), future_pred]),
-             color='red', label='Prediction')
-    plt.title('Sales Prediction')
-    plt.xlabel('Days since first order')
-    plt.ylabel('Sales Amount')
+             color='red', label='Прогноз')
+    plt.title('Прогноз продаж')
+    plt.xlabel('Дней с первого заказа')
+    plt.ylabel('Число продаж')
     plt.legend()
 
     buffer = BytesIO()
