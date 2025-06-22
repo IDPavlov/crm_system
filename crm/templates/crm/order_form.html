@@ -8,12 +8,10 @@
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
-            {{ form.client.label_tag }}
-            {{ form.client }}
+            Клиент: {{ form.client }}
         </div>
         <div class="mb-3">
-            {{ form.status.label_tag }}
-            {{ form.status }}
+            Состояние: {{ form.status }}
         </div>
         <div class="mb-3">
             <label>Товары:</label>
